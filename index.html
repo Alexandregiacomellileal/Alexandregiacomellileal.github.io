@@ -1,38 +1,579 @@
 <!doctype html>
-<html lang="pt-br">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Minha Página</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Personal page of Eng. Alexandre Giacomelli Leal, D.Sc. — Electrical Engineer, researcher in grounding systems, power electronics and ML for electrical measurements." />
+  <title>Alexandre Giacomelli Leal, D.Sc. — Electrical Engineer</title>
+
   <style>
-    body { font-family: system-ui, Arial; max-width: 720px; margin: 40px auto; padding: 0 16px; line-height: 1.5; }
-    header { margin-bottom: 24px; }
-    a { text-decoration: none; }
-    .card { border: 1px solid #ddd; border-radius: 12px; padding: 16px; margin: 12px 0; }
+    :root{
+      --bg: #0b1220;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.08);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
+      --faint: rgba(255,255,255,.55);
+      --line: rgba(255,255,255,.14);
+      --accent: #7dd3fc;
+      --accent2: #a78bfa;
+      --good: #34d399;
+      --shadow: 0 10px 30px rgba(0,0,0,.30);
+      --radius: 18px;
+      --max: 1080px;
+    }
+
+    *{ box-sizing: border-box; }
+    html,body{ height: 100%; }
+    body{
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--text);
+      background:
+        radial-gradient(1000px 700px at 15% 15%, rgba(125,211,252,.22), transparent 55%),
+        radial-gradient(900px 600px at 85% 25%, rgba(167,139,250,.18), transparent 55%),
+        radial-gradient(1100px 700px at 45% 100%, rgba(52,211,153,.12), transparent 55%),
+        linear-gradient(180deg, #050814 0%, var(--bg) 60%, #070a15 100%);
+      line-height: 1.6;
+    }
+
+    a{ color: var(--text); text-decoration: none; }
+    a:hover{ color: white; text-decoration: underline; text-underline-offset: 3px; }
+
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 28px 18px 54px; }
+
+    .topbar{
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 14px;
+      padding: 10px 2px 22px;
+    }
+    .brand{
+      display:flex; align-items:center; gap: 10px;
+      font-weight: 700; letter-spacing: .3px;
+    }
+    .dot{
+      width: 11px; height: 11px; border-radius: 99px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 0 4px rgba(125,211,252,.12);
+    }
+    nav{ display:flex; gap: 14px; flex-wrap: wrap; justify-content: flex-end; }
+    nav a{
+      color: var(--muted);
+      font-size: 14px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+    }
+    nav a:hover{
+      color: var(--text);
+      border-color: var(--line);
+      text-decoration: none;
+      background: rgba(255,255,255,.04);
+    }
+
+    .hero{
+      display: grid;
+      grid-template-columns: 1.35fr .65fr;
+      gap: 18px;
+      margin-top: 8px;
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .card .inner{ padding: 22px; }
+
+    h1{
+      margin: 0 0 10px;
+      font-size: clamp(28px, 3.2vw, 44px);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+    .subtitle{
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 70ch;
+    }
+
+    .badges{ display:flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .badge{
+      display:inline-flex; align-items:center; gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .badge strong{ color: var(--text); font-weight: 650; }
+
+    .ctaRow{ display:flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      transition: transform .08s ease, background .15s ease, border-color .15s ease;
+    }
+    .btn:hover{ background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.22); text-decoration: none; }
+    .btn:active{ transform: translateY(1px); }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(125,211,252,.18), rgba(167,139,250,.14));
+      border-color: rgba(125,211,252,.26);
+    }
+
+    .sidebox{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    }
+    .kpi{
+      display:grid;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .kpi .row{
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+    }
+    .kpi .label{ font-size: 12px; color: var(--faint); text-transform: uppercase; letter-spacing: .12em; }
+    .kpi .value{ font-size: 14px; color: var(--text); margin-top: 3px; font-weight: 650; }
+    .kpi .note{ font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    h2{
+      margin: 0 0 10px;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+    }
+    .sectionTitle{
+      display:flex; align-items:center; justify-content: space-between; gap: 12px;
+      margin-bottom: 8px;
+    }
+    .sectionTitle small{ color: var(--faint); font-size: 12px; }
+
+    .list{
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+    .list li{ margin: 6px 0; }
+    .muted{ color: var(--muted); }
+    .faint{ color: var(--faint); }
+
+    .timeline{
+      display:grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .item{
+      padding: 14px 14px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+    }
+    .itemHead{
+      display:flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px;
+    }
+    .itemHead strong{ font-weight: 700; }
+    .when{ color: var(--faint); font-size: 13px; white-space: nowrap; }
+    .where{ color: var(--muted); font-size: 14px; margin-top: 4px; }
+    .desc{ color: var(--muted); font-size: 14px; margin-top: 8px; }
+
+    .pubs ol{ margin: 0; padding-left: 18px; color: var(--muted); }
+    .pubs li{ margin: 8px 0; }
+
+    footer{
+      margin-top: 22px;
+      padding: 18px 4px 0;
+      border-top: 1px solid var(--line);
+      color: var(--faint);
+      font-size: 13px;
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items:center;
+      justify-content: space-between;
+    }
+
+    .pill{
+      display:inline-flex; gap: 8px; align-items:center;
+      padding: 6px 10px; border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .spark{
+      width: 8px; height: 8px; border-radius: 99px;
+      background: var(--good);
+      box-shadow: 0 0 0 4px rgba(52,211,153,.10);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .hero{ grid-template-columns: 1fr; }
+      nav{ justify-content: flex-start; }
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{ scroll-behavior: auto !important; transition: none !important; }
+    }
   </style>
 </head>
+
 <body>
-  <header>
-    <h1>Seu Nome</h1>
-    <p>Uma frase curta sobre você (ex.: estudante, áreas de interesse, etc.).</p>
-    <p>
-      <a href="#">Instagram</a> ·
-      <a href="#">LinkedIn</a> ·
-      <a href="#">GitHub</a>
-    </p>
-  </header>
+  <div class="wrap">
+    <header class="topbar">
+      <div class="brand">
+        <span class="dot" aria-hidden="true"></span>
+        <span>Alexandre Giacomelli Leal</span>
+      </div>
+      <nav aria-label="Primary navigation">
+        <a href="#about">About</a>
+        <a href="#focus">Focus</a>
+        <a href="#experience">Experience</a>
+        <a href="#education">Education</a>
+        <a href="#publications">Publications</a>
+        <a href="#service">Service</a>
+      </nav>
+    </header>
 
-  <section class="card">
-    <h2>Projetos</h2>
-    <ul>
-      <li><a href="#">Projeto 1</a> — 1 frase explicando.</li>
-      <li><a href="#">Projeto 2</a> — 1 frase explicando.</li>
-    </ul>
-  </section>
+    <section class="hero">
+      <div class="card">
+        <div class="inner">
+          <h1>Eng. Alexandre Giacomelli Leal, D.Sc.</h1>
+          <p class="subtitle">
+            Electrical Engineer and researcher working on <strong>grounding systems</strong>, <strong>power electronics</strong>,
+            and <strong>machine learning for electrical measurements</strong>.
+          </p>
 
-  <section class="card">
-    <h2>Contato</h2>
-    <p>Você pode colocar um e-mail ou um formulário (ex.: Google Forms).</p>
-  </section>
+          <div class="badges" id="about">
+            <span class="badge"><strong>Based in</strong> Curitiba, Brazil</span>
+            <span class="badge"><strong>Affiliations</strong> UTFPR · LACTEC</span>
+            <span class="badge"><strong>Expert roles</strong> Judicial & customs engineering expert</span>
+            <span class="badge"><strong>Languages</strong> Portuguese · English · Italian</span>
+          </div>
+
+          <div class="ctaRow">
+            <a class="btn primary" href="https://orcid.org/0000-0002-1607-3752" target="_blank" rel="noopener">
+              ORCID
+              <span aria-hidden="true">↗</span>
+            </a>
+            <a class="btn" href="#publications">Selected publications</a>
+            <a class="btn" href="#experience">Professional experience</a>
+          </div>
+
+          <p class="muted" style="margin:18px 0 0;">
+            Research interests include intelligent monitoring of grounding systems, energized-condition measurements,
+            EMC/EMI, and data-driven modeling for power-system assets.
+          </p>
+        </div>
+      </div>
+
+      <aside class="card sidebox" aria-label="Quick highlights">
+        <div class="inner">
+          <div class="sectionTitle">
+            <h2 style="margin:0;">Highlights</h2>
+            <small>at a glance</small>
+          </div>
+
+          <div class="kpi">
+            <div class="row">
+              <div class="label">Current</div>
+              <div class="value">Postdoctoral research (Electrical Engineering & Industrial Informatics)</div>
+              <div class="note">Intelligent monitoring of grounding & smart grids (EMBRAPII/LACTEC project).</div>
+            </div>
+
+            <div class="row">
+              <div class="label">Industry background</div>
+              <div class="value">Power electronics · energy systems · EMC/EMI</div>
+              <div class="note">From product development to field consulting and laboratory operations.</div>
+            </div>
+
+            <div class="row">
+              <div class="label">Recognition</div>
+              <div class="value">UTFPR Best PhD Thesis Award (2025)</div>
+              <div class="note">Awarded among theses from 2023–2025.</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="grid">
+      <div class="card" id="focus">
+        <div class="inner">
+          <div class="sectionTitle">
+            <h2>Focus areas</h2>
+            <small>technical interests</small>
+          </div>
+          <ul class="list">
+            <li>Grounding/earthing systems: measurement, modeling, and condition monitoring.</li>
+            <li>Machine learning applied to electrical measurements and error minimization.</li>
+            <li>Power electronics (AC/DC, DC/DC converters, rectifiers, UPS) and reliability.</li>
+            <li>EMC/EMI: filtering, compliance-oriented design, and automated test approaches.</li>
+            <li>Power quality and electrical protection in industrial environments.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" id="service">
+        <div class="inner">
+          <div class="sectionTitle">
+            <h2>Scientific service</h2>
+            <small>community roles</small>
+          </div>
+          <ul class="list">
+            <li>Ad hoc reviewer: <span class="muted">Electric Power Systems Research</span>, <span class="muted">IEEE Sensors Journal</span>, <span class="muted">Measurement</span>, <span class="muted">International Journal of Electrical Power & Energy Systems</span>, and others (2002–2025).</li>
+            <li>Member, evaluation committee: Technical-Scientific Journal of CREA-PR (2025–present).</li>
+          </ul>
+          <div style="margin-top:14px;">
+            <span class="pill"><span class="spark" aria-hidden="true"></span> Evidence-driven, standards-aligned technical writing</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card" id="experience">
+        <div class="inner">
+          <div class="sectionTitle">
+            <h2>Professional experience</h2>
+            <small>selected roles</small>
+          </div>
+
+          <ul class="timeline">
+            <li class="item">
+              <div class="itemHead">
+                <strong>Electrical Engineering Expert — Brazilian Federal Revenue</strong>
+                <span class="when">2023–present</span>
+              </div>
+              <div class="where">Technical customs expert work (equipment identification/assessment) aligned with Brazilian regulations and ABNT/IEC standards.</div>
+            </li>
+
+            <li class="item">
+              <div class="itemHead">
+                <strong>Court Expert — Electrical, Electronics & Telecommunications Engineering</strong>
+                <span class="when">2019–present</span>
+              </div>
+              <div class="where">Technical reports, inspections and expert opinions for civil, public-sector, and tax-related proceedings (State Court of Paraná).</div>
+            </li>
+
+            <li class="item">
+              <div class="itemHead">
+                <strong>Researcher — Signal Processing & Pattern Recognition for Power Systems Group (UTFPR)</strong>
+                <span class="when">2022–present</span>
+              </div>
+              <div class="where">Applied research in grounding systems, measurement techniques, and ML-based failure prediction for power networks.</div>
+            </li>
+
+            <li class="item">
+              <div class="itemHead">
+                <strong>Founder & Technical Director — Electel Ltda</strong>
+                <span class="when">2001–2019</span>
+              </div>
+              <div class="where">Services in power electronics and energy systems for major companies (including Siemens, Alcatel-Lucent, NEC, Emerson, GE, Tyco).</div>
+              <div class="desc">
+                Built and managed a corrective-maintenance lab (high-volume operations), developed test jigs and procedures for SMPS/rectifiers/UPS, and provided consulting in electrical protection and power quality.
+              </div>
+            </li>
+
+            <li class="item">
+              <div class="itemHead">
+                <strong>Electronics Development Engineer — Siemens Telecommunications</strong>
+                <span class="when">1993–2001</span>
+              </div>
+              <div class="where">Design of switched-mode power supplies and energy solutions; contributions in EMC/EMI, filter design, automated testing, and product nationalization.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" id="education">
+        <div class="inner">
+          <div class="sectionTitle">
+            <h2>Education</h2>
+            <small>academic background</small>
+          </div>
+
+          <ul class="timeline">
+            <li class="item">
+              <div class="itemHead">
+                <strong>Postdoctoral Research — Electrical Engineering & Industrial Informatics</strong>
+                <span class="when">2025–present</span>
+              </div>
+              <div class="where">Federal University of Technology – Paraná (UTFPR), Curitiba, Brazil.</div>
+              <div class="desc">Research on intelligent monitoring of grounding and power networks (EMBRAPII/LACTEC).</div>
+            </li>
+
+            <li class="item">
+              <div class="itemHead">
+                <strong>Ph.D. (D.Sc.) — Electrical Engineering & Industrial Informatics</strong>
+                <span class="when">2024</span>
+              </div>
+              <div class="where">UTFPR, Curitiba, Brazil.</div>
+              <div class="desc">
+                Thesis: A new approach for estimating wind turbine grounding resistance.
+                Advisors: Dr. André E. Lazzaretti; Dr. Henry L. López Salamanca.
+              </div>
+            </li>
+
+            <li class="item">
+              <div class="itemHead">
+                <strong>M.Sc. — Technology Development</strong>
+                <span class="when">2021</span>
+              </div>
+              <div class="where">Institutos LACTEC, Curitiba, Brazil.</div>
+              <div class="desc">Dissertation on clamp-on grounding resistance measurements in wind complexes.</div>
+            </li>
+
+            <li class="item">
+              <div class="itemHead">
+                <strong>B.Sc. — Electrical Engineering (Electronics & Telecommunications)</strong>
+                <span class="when">1998</span>
+              </div>
+              <div class="where">UTFPR, Curitiba, Brazil.</div>
+            </li>
+
+            <li class="item">
+              <div class="itemHead">
+                <strong>Specializations</strong>
+                <span class="when">2002–2025</span>
+              </div>
+              <div class="where">
+                Industrial Electrical Systems (UTFPR) · Occupational Safety Engineering (FUNIP) ·
+                Electronic & Electromechanical Engineering (FUNIP) · Electrical Installations (Prominas) ·
+                Automation Systems (Prominas) · Customs Expert Practice in Foreign Trade (Faculdade Iguaçu)
+              </div>
+            </li>
+          </ul>
+
+          <div style="margin-top: 14px;">
+            <span class="pill" title="No personal contact details displayed.">
+              Privacy-first public profile
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card pubs" id="publications">
+        <div class="inner">
+          <div class="sectionTitle">
+            <h2>Selected publications</h2>
+            <small>highlights</small>
+          </div>
+
+          <ol>
+            <li>
+              Leal, A.G. et al. <em>Machine Learning-Based Estimation of Transmission Line Tower Grounding Resistance Under Energized Conditions Using Residual Currents and Near-Surface Potentials</em>.
+              <em>IEEE Access</em>, 14: 17103–17120 (2026).
+            </li>
+            <li>
+              Leal, A.G.; Lazzaretti, A.E.; López Salamanca, H.L.
+              <em>Enhanced estimation of wind turbine grounding resistance using clamp-on metering, computational simulation, and machine learning techniques</em>.
+              <em>Electric Power Systems Research</em>, 236: 110942 (2024).
+            </li>
+            <li>
+              Leal, A.G.; Lazzaretti, A.E.; López Salamanca, H.L.
+              <em>A new lumped parameter modeling for wind farm grounding measurement circuits</em>.
+              <em>Journal of Control, Automation and Electrical Systems</em>, 35: 562–572 (2024).
+            </li>
+            <li>
+              Leal, A.G.; Lazzaretti, A.E.; López Salamanca, H.L.
+              <em>A systematic review on grounding impedance measurement in electrical installations</em>.
+              <em>Electric Power Systems Research</em>, 214: 108953 (2023).
+            </li>
+            <li>
+              Leal, A.G.; López Salamanca, H.L.; Lazzaretti, A.E.; Marcilio, D.C.
+              <em>A new approach for ground resistance measurements in onshore wind farms</em>.
+              <em>Electric Power Systems Research</em>, 210: 108161 (2022).
+            </li>
+          </ol>
+
+          <p class="muted" style="margin: 12px 0 0;">
+            (Tip: you can add links to DOI / publisher pages later, keeping the page lightweight.)
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="inner">
+          <div class="sectionTitle">
+            <h2>Languages & awards</h2>
+            <small>quick facts</small>
+          </div>
+
+          <ul class="timeline">
+            <li class="item">
+              <div class="itemHead">
+                <strong>Languages</strong>
+                <span class="when">proficiency</span>
+              </div>
+              <div class="where">Portuguese (native) · English (advanced) · Italian (intermediate)</div>
+            </li>
+
+            <li class="item">
+              <div class="itemHead">
+                <strong>Awards</strong>
+                <span class="when">2025</span>
+              </div>
+              <div class="where">UTFPR Award — Best PhD Thesis among 2023–2025.</div>
+            </li>
+
+            <li class="item">
+              <div class="itemHead">
+                <strong>Continuing education</strong>
+                <span class="when">selected</span>
+              </div>
+              <div class="where">
+                Machine Learning with Python (370h) · AI (40h) · Grounding Application Learning Path (ABB/IEC)
+              </div>
+              <div class="desc faint">
+                (You can add a dedicated "Courses" section later if you want the full long list.)
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>© <span id="year"></span> Alexandre Giacomelli Leal · Public profile (no personal contact details)</div>
+      <div class="faint">Last updated: <span id="updated"></span></div>
+    </footer>
+  </div>
+
+  <script>
+    // Small, privacy-friendly client-side helpers (no tracking)
+    const d = new Date();
+    document.getElementById("year").textContent = d.getFullYear();
+    document.getElementById("updated").textContent = d.toLocaleDateString(undefined, { year:"numeric", month:"short", day:"2-digit" });
+  </script>
 </body>
 </html>
+
